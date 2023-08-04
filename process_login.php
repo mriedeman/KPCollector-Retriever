@@ -1,9 +1,5 @@
 <?php
 
-//hard coded username and password
-// $validUsername = "kpadmin";
-// $validPassword = "kp123";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
