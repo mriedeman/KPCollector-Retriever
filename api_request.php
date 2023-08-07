@@ -7,16 +7,37 @@ $partners = array(
     "The Institute for Advanced Learning and Research" => "95a75e75-d77d-4cc8-b287-e7966df3fd1c"
 );
 
-if ($_SERVER["REQUEST_METHOD"] === 'GET') {
-    if (isset($_GET["partner"])) {
-        $selectedPartner = $_GET["partner"];
+if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+    if (isset($_POST["partner"])) {
+        $selectedPartner = $_POST["partner"];
         if (array_key_exists($selectedPartner, $partners)) {
             $atmsKey = $partners[$selectedPartner];
-            $apiEndpoint = "https://localhost:3000/scraping/scrapedetails/{$atmsKey}";
 
-            //code to makae API Request using endpoint
-            echo $apiEndpoint;
-        
+            if (isset($_POST["endpoint"])) {
+                $endpoint = $_POST["endpoint"];
+                switch($endpoint) {
+                    case "scrapedetails":
+                        $apiEndpoint = "https://localhost:3000/scraping/scrapedetails/{$atmsKey}";
+                        break;
+                    case "scrapejobs":
+                        $apiEndpoint = "https://localhost:3000/scraping/scrapejobs/{$atmsKey}";
+                        break;
+                    case "scraperesources":
+                        $apiEndpoint = "https://localhost:3000/scraping/scraperesources/{$atmsKey}";
+                        break;
+                    case "scrapecontacts":
+                        $apiEndpoint = "https://localhost:3000/scraping/scrapecontacts/{$atmsKey}";
+                        break;
+                    default:
+                        echo "Invalid Endpoint Selection";
+                        exit;
+                }
+
+                //Make API Request to Endpoint
+                echo "API Endpoint: " . $apiEndpoint;
+            } else {
+                echo "No Endpoint Selected.";
+            }
         } else {
             echo "Invalid partner selection.";
         }
