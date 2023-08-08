@@ -39,18 +39,6 @@
 
 
 <script>
-    function submitForm() {
-        var partnerForm = document.getElementById("partner-form");
-        var formData = new FormData(partnerForm);
-        fetch("api_request.php", {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => document.getElementById('response').innerText = data)
-        .catch(error => console.error('Error:', error));
-    }
-
     function callAPI(endpoint) {
         var selectedPartner = document.getElementById("partner-list").value;
         if (selectedPartner !== ""){
@@ -68,7 +56,6 @@
             alert("Please select a partner first")
         }
     }
-
     </script>
 
 

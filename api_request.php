@@ -1,6 +1,6 @@
 <?php
 $partners = array(
-    "Danville Community College" => "6270eaa2-0345-4805-8332-4c3abfae587d",
+    "Danville Community College" => "7d3eb95f-0238-43b8-9027-7856f16b610c",
     "Job Corp" => "aec4d986-89ae-4537-902d-0bbe6a92da74",
     "Danville Police Department" => "6270eaa2-0345-4805-8332-4c3abfae587d",
     "Anthem Insurance aka Elevance Health" => "d810ff78-d587-486e-ad69-c2b1d0903889",
@@ -17,24 +17,32 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
                 $endpoint = $_POST["endpoint"];
                 switch($endpoint) {
                     case "scrapedetails":
-                        $apiEndpoint = "https://localhost:3000/scraping/scrapedetails/{$atmsKey}";
+                        $apiEndpoint = "http://localhost:3000/scraping/scrapedetails/{$atmsKey}";
                         break;
                     case "scrapejobs":
-                        $apiEndpoint = "https://localhost:3000/scraping/scrapejobs/{$atmsKey}";
+                        $apiEndpoint = "http://localhost:3000/scraping/scrapejobs/{$atmsKey}";
                         break;
                     case "scraperesources":
-                        $apiEndpoint = "https://localhost:3000/scraping/scraperesources/{$atmsKey}";
+                        $apiEndpoint = "http://localhost:3000/scraping/scraperesources/{$atmsKey}";
                         break;
                     case "scrapecontacts":
-                        $apiEndpoint = "https://localhost:3000/scraping/scrapecontacts/{$atmsKey}";
+                        $apiEndpoint = "http://localhost:3000/scraping/scrapecontacts/{$atmsKey}";
                         break;
                     default:
                         echo "Invalid Endpoint Selection";
                         exit;
                 }
 
-                //Make API Request to Endpoint
                 echo "API Endpoint: " . $apiEndpoint;
+                //Make API Request to Endpoint
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $apiEndpoint);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                echo $response;
+                
+
             } else {
                 echo "No Endpoint Selected.";
             }
